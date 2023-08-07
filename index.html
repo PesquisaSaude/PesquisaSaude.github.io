@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pesquisa de Satisfação - SESI Saúde</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .logo {
+      display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px; /* 600 */
+  height: auto;
+  margin-bottom: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .question {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .rating {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .rating input[type="radio"] {
+      display: none;
+    }
+
+    .rating label {
+      cursor: pointer;
+      font-size: 24px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      background-color: #f5f5f5;
+      transition: background-color 0.3s ease;
+      margin: 0 5px;
+    }
+
+    .rating label:hover {
+      background-color: #e0e0e0;
+    }
+
+    .rating input[type="radio"]:checked+label {
+      background-color: #333;
+      color: #fff;
+    }
+
+    .submit-button {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .submit-button button {
+      font-size: 24px;
+      padding: 15px 30px;
+      cursor: pointer;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-button button:hover {
+      background-color: #555;
+    }
+
+    .result {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .result h2 {
+      margin-bottom: 10px;
+    }
+
+    .result p {
+      font-size: 20px;
+    }
+
+    .legend {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .warning {
+      color: red;
+      margin-top: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="header"> 
+    <img class="logo" src="img/LogSESI.jpg" alt="Logo SESI Saúde" style="max-width: 100%; height: 200px;">
+    <h1>Pesquisa de Satisfação - SESI Saúde</h1>
+	
+    <form action="https://api.sheetmonkey.io/form/aBToWxd9mDJqm79ThUi5iD" method="post">
+    <form id="surveyForm">
+      <div class="question">
+        <label for="q1">1. Como você avalia a qualidade dos serviços do SESI Saúde?</label>
+        <div class="rating">
+          <input type="radio" name="q1" value="1" id="q1_1">
+          <label for="q1_1">1</label>
+          <input type="radio" name="q1" value="2" id="q1_2">
+          <label for="q1_2">2</label>
+          <input type="radio" name="q1" value="3" id="q1_3">
+          <label for="q1_3">3</label>
+          <input type="radio" name="q1" value="4" id="q1_4">
+          <label for="q1_4">4</label>
+          <input type="radio" name="q1" value="5" id="q1_5">
+          <label for="q1_5">5</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <label for="q2">2. Como você avalia o atendimento recebido pelos profissionais do SESI Saúde?</label>
+        <div class="rating">
+          <input type="radio" name="q2" value="1" id="q2_1">
+          <label for="q2_1">1</label>
+          <input type="radio" name="q2" value="2" id="q2_2">
+          <label for="q2_2">2</label>
+          <input type="radio" name="q2" value="3" id="q2_3">
+          <label for="q2_3">3</label>
+          <input type="radio" name="q2" value="4" id="q2_4">
+          <label for="q2_4">4</label>
+          <input type="radio" name="q2" value="5" id="q2_5">
+          <label for="q2_5">5</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <label for="q3">3. Como você avalia a infraestrutura da unidade do SESI Saúde?</label>
+        <div class="rating">
+          <input type="radio" name="q3" value="1" id="q3_1">
+          <label for="q3_1">1</label>
+          <input type="radio" name="q3" value="2" id="q3_2">
+          <label for="q3_2">2</label>
+          <input type="radio" name="q3" value="3" id="q3_3">
+          <label for="q3_3">3</label>
+          <input type="radio" name="q3" value="4" id="q3_4">
+          <label for="q3_4">4</label>
+          <input type="radio" name="q3" value="5" id="q3_5">
+          <label for="q3_5">5</label>
+        </div>
+      </div>
+
+      <div class="submit-button">
+        <button type="submit">Enviar</button>
+      </div>
+
+      <div id="warningContainer" class="warning"></div>
+    </form>
+
+    <div id="resultContainer" class="result">
+      <h2>Obrigado por participar da pesquisa!</h2>
+      <p>Seu feedback é muito importante para nós.</p>
+    </div>
+
+
+    <div class="legend">
+      <h3>Níveis de satisfação:</h3>
+      <img src="img/testeEmote2.jpg" height="250" alt="Níveis de satisfação">
+    </div>
+  </div>
+
+  <script>
+    const surveyForm = document.getElementById("surveyForm");
+    const resultContainer = document.getElementById("resultContainer");
+    const warningContainer = document.getElementById("warningContainer");
+
+    surveyForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const answeredQuestions = document.querySelectorAll("input[type='radio']:checked");
+      if (answeredQuestions.length === 3) {
+        showResult();
+      } else {
+        warningContainer.innerText = "Por favor, responda todas as questões.";
+      }
+    });
+
+    function showResult() {
+      surveyForm.style.display = "none";
+      resultContainer.style.display = "block";
+      
+      setTimeout(function() {
+        surveyForm.style.display = "block";
+        resultContainer.style.display = "none";
+        surveyForm.reset();
+        warningContainer.innerText = ""; // Limpar a mensagem de aviso
+      }, 3000); // Tempo em milissegundos antes de reiniciar a tela (neste exemplo, 3 segundos)
+    }
+    
+    // Função adicionada
+    const ratingInputs = document.querySelectorAll("input[type='radio']");
+    ratingInputs.forEach(function (input) {
+      input.addEventListener("change", function () {
+        warningContainer.innerText = ""; // Limpar a mensagem de aviso
+      });
+    });
+  </script>
+  
+    <script>
+    const surveyForm = document.getElementById("surveyForm");
+    const resultContainer = document.getElementById("resultContainer");
+    const warningContainer = document.getElementById("warningContainer");
+
+    const sheetMonkeyAPI = "https://api.sheetmonkey.io/form/aBToWxd9mDJqm79ThUi5iD";
+
+    surveyForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const answeredQuestions = document.querySelectorAll("input[type='radio']:checked");
+      if (answeredQuestions.length === 3) {
+        // Enviar respostas para o Sheet Monkey
+        const formData = new FormData(surveyForm);
+        const entries = formData.entries();
+        const data = {};
+        for (const entry of entries) {
+          data[entry[0]] = entry[1];
+        }
+        sendDataToSheetMonkey(data);
+
+        showResult();
+      } else {
+        warningContainer.innerText = "Por favor, responda todas as questões.";
+      }
+    });
+
+    function sendDataToSheetMonkey(data) {
+      fetch(sheetMonkeyAPI, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Erro ao enviar dados para o Sheet Monkey.");
+        }
+        return response.json();
+      })
+      .then(result => {
+        console.log(result); // Resposta do Sheet Monkey (opcional, pode ser removido)
+      })
+      .catch(error => {
+        console.error(error); // Tratar erros (opcional, pode ser removido)
+      });
+    }
+
+    function showResult() {
+      // ... Código para exibir a mensagem de agradecimento existente ...
+
+      setTimeout(function() {
+        surveyForm.style.display = "block";
+        resultContainer.style.display = "none";
+        surveyForm.reset();
+        warningContainer.innerText = ""; // Limpar a mensagem de aviso
+      }, 3000); // Tempo em milissegundos antes de reiniciar a tela (neste exemplo, 3 segundos)
+    }
+
+    // ... Código para adicionar evento de limpar aviso existente ...
+
+  </script>
+</body>
+</html>
